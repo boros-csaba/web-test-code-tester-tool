@@ -1,0 +1,49 @@
+﻿@using DataAccessLayer.Model
+@model List<ProblemSet>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="content" class="row panel well">
+    <div class="panel-heading"><h1>Admin panel</h1></div>
+    <div class="row">
+        <div class="col-md-3">
+            @Html.Partial("Menu")
+        </div>
+        <div class="col-md-9">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Feladatok</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ProblemSet problemSet in Model)
+                    {
+                        <tr>
+                            <td>@problemSet.Name</td>
+                            <td>
+                                <table table-hover>
+                                    <tbody>
+                                        @foreach (OrderedProblem orderedProblem in problemSet.OrderedProblems.OrderBy(p => p.Order))
+                                        {
+                                            <tr>
+                                                <td>@orderedProblem.Problem.Title</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td>@Html.ActionLink(" ", "ProblemSetEditView", "Admin", new { problemSetId = problemSet.Id }, new { @class = "glyphicon glyphicon-pencil" })</td>
+                            <td>@Html.ActionLink(" ", "DeleteProblemSet", "Admin", new { problemSetId = problemSet.Id }, new { @class = "glyphicon glyphicon-trash" })</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @Html.ActionLink("Új feladat sor", "NewProblemSet", "Admin", new { problem = 1 }, new { @class = "btn btn-primary" })
+        </div>
+    </div>
+</div>

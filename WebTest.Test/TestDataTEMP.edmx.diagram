@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8a383180d32649b7a4b44e41cb1172fe" Name="Diagram1">
+        <EntityTypeShape EntityType="DataAccessLayer.ContextModel.AnswerKeys" Width="1.5" PointX="3.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataAccessLayer.ContextModel.OrderedProblems" Width="2" PointX="3.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataAccessLayer.ContextModel.Problems" Width="1.5" PointX="1" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataAccessLayer.ContextModel.ProblemSets" Width="1.75" PointX="0.75" PointY="7.375" IsExpanded="true" />
+        <AssociationConnector Association="DataAccessLayer.ContextModel.FK_dbo_AnswerKeys_dbo_Problems_ProblemId" ManuallyRouted="false" />
+        <AssociationConnector Association="DataAccessLayer.ContextModel.FK_dbo_OrderedProblems_dbo_Problems_ProblemId" ManuallyRouted="false" />
+        <AssociationConnector Association="DataAccessLayer.ContextModel.FK_dbo_OrderedProblems_dbo_ProblemSets_ProblemSetId" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

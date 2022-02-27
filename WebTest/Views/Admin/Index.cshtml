@@ -1,0 +1,38 @@
+﻿@using DataAccessLayer.Model
+@model List<Problem>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="content" class="row panel well">
+    <div class="panel-heading"><h1>Admin panel</h1></div>
+    <div class="row">
+        <div class="col-md-3">
+            @Html.Partial("Menu")
+        </div>
+        <div class="col-md-9">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Test cases</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Problem problem in Model)
+                    {
+                        <tr>
+                            <td>@problem.Title</td>
+                            <td>@Html.ActionLink(" ", "AnswerKey", "Admin", new { problemId = problem.ProblemId }, new { @class = "glyphicon glyphicon-list" })</td>
+                            <td>@Html.ActionLink(" ", "EditView", "Admin", new { problemId = problem.ProblemId }, new { @class = "glyphicon glyphicon-pencil" })</td>
+                            <td>@Html.ActionLink(" ", "DeleteProblem", "Admin", new { problemId = problem.ProblemId }, new { @class = "glyphicon glyphicon-trash" })</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @Html.ActionLink("Új feladat", "NewProblem", "Admin", new { problem = 1 }, new { @class="btn btn-primary"})
+        </div>
+    </div>
+</div>

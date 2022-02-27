@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DataAccessLayer.ContextModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AnswerKeys">
+          <Key>
+            <PropertyRef Name="AnswerKeyId" />
+          </Key>
+          <Property Name="AnswerKeyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Input" Type="nvarchar(max)" />
+          <Property Name="Output" Type="nvarchar(max)" />
+          <Property Name="FixedRowOrder" Type="bit" Nullable="false" />
+          <Property Name="ProblemId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderedProblems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Order" Type="int" Nullable="false" />
+          <Property Name="ProblemId" Type="int" Nullable="false" />
+          <Property Name="ProblemSetId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Problems">
+          <Key>
+            <PropertyRef Name="ProblemId" />
+          </Key>
+          <Property Name="ProblemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Template" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProblemSets">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_dbo_AnswerKeys_dbo_Problems_ProblemId">
+          <End Role="Problems" Type="Self.Problems" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AnswerKeys" Type="Self.AnswerKeys" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Problems">
+              <PropertyRef Name="ProblemId" />
+            </Principal>
+            <Dependent Role="AnswerKeys">
+              <PropertyRef Name="ProblemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_OrderedProblems_dbo_Problems_ProblemId">
+          <End Role="Problems" Type="Self.Problems" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OrderedProblems" Type="Self.OrderedProblems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Problems">
+              <PropertyRef Name="ProblemId" />
+            </Principal>
+            <Dependent Role="OrderedProblems">
+              <PropertyRef Name="ProblemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_OrderedProblems_dbo_ProblemSets_ProblemSetId">
+          <End Role="ProblemSets" Type="Self.ProblemSets" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OrderedProblems" Type="Self.OrderedProblems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProblemSets">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderedProblems">
+              <PropertyRef Name="ProblemSetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DataAccessLayerContextModelStoreContainer">
+          <EntitySet Name="AnswerKeys" EntityType="Self.AnswerKeys" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderedProblems" EntityType="Self.OrderedProblems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Problems" EntityType="Self.Problems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProblemSets" EntityType="Self.ProblemSets" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_AnswerKeys_dbo_Problems_ProblemId" Association="Self.FK_dbo_AnswerKeys_dbo_Problems_ProblemId">
+            <End Role="Problems" EntitySet="Problems" />
+            <End Role="AnswerKeys" EntitySet="AnswerKeys" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_OrderedProblems_dbo_Problems_ProblemId" Association="Self.FK_dbo_OrderedProblems_dbo_Problems_ProblemId">
+            <End Role="Problems" EntitySet="Problems" />
+            <End Role="OrderedProblems" EntitySet="OrderedProblems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_OrderedProblems_dbo_ProblemSets_ProblemSetId" Association="Self.FK_dbo_OrderedProblems_dbo_ProblemSets_ProblemSetId">
+            <End Role="ProblemSets" EntitySet="ProblemSets" />
+            <End Role="OrderedProblems" EntitySet="OrderedProblems" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DataAccessLayer.ContextModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AnswerKeys">
+          <Key>
+            <PropertyRef Name="AnswerKeyId" />
+          </Key>
+          <Property Name="AnswerKeyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Input" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Output" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FixedRowOrder" Type="Boolean" Nullable="false" />
+          <Property Name="ProblemId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Problem" Relationship="Self.FK_dbo_AnswerKeys_dbo_Problems_ProblemId" FromRole="AnswerKeys" ToRole="Problems" />
+        </EntityType>
+        <EntityType Name="OrderedProblems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Order" Type="Int32" Nullable="false" />
+          <Property Name="ProblemId" Type="Int32" Nullable="false" />
+          <Property Name="ProblemSetId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Problem" Relationship="Self.FK_dbo_OrderedProblems_dbo_Problems_ProblemId" FromRole="OrderedProblems" ToRole="Problems" />
+          <NavigationProperty Name="ProblemSet" Relationship="Self.FK_dbo_OrderedProblems_dbo_ProblemSets_ProblemSetId" FromRole="OrderedProblems" ToRole="ProblemSets" />
+        </EntityType>
+        <EntityType Name="Problems">
+          <Key>
+            <PropertyRef Name="ProblemId" />
+          </Key>
+          <Property Name="ProblemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Template" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AnswerKeys" Relationship="Self.FK_dbo_AnswerKeys_dbo_Problems_ProblemId" FromRole="Problems" ToRole="AnswerKeys" />
+          <NavigationProperty Name="OrderedProblems" Relationship="Self.FK_dbo_OrderedProblems_dbo_Problems_ProblemId" FromRole="Problems" ToRole="OrderedProblems" />
+        </EntityType>
+        <EntityType Name="ProblemSets">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="OrderedProblems" Relationship="Self.FK_dbo_OrderedProblems_dbo_ProblemSets_ProblemSetId" FromRole="ProblemSets" ToRole="OrderedProblems" />
+        </EntityType>
+        <Association Name="FK_dbo_AnswerKeys_dbo_Problems_ProblemId">
+          <End Role="Problems" Type="Self.Problems" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AnswerKeys" Type="Self.AnswerKeys" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Problems">
+              <PropertyRef Name="ProblemId" />
+            </Principal>
+            <Dependent Role="AnswerKeys">
+              <PropertyRef Name="ProblemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_OrderedProblems_dbo_Problems_ProblemId">
+          <End Role="Problems" Type="Self.Problems" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OrderedProblems" Type="Self.OrderedProblems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Problems">
+              <PropertyRef Name="ProblemId" />
+            </Principal>
+            <Dependent Role="OrderedProblems">
+              <PropertyRef Name="ProblemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_OrderedProblems_dbo_ProblemSets_ProblemSetId">
+          <End Role="ProblemSets" Type="Self.ProblemSets" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OrderedProblems" Type="Self.OrderedProblems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProblemSets">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderedProblems">
+              <PropertyRef Name="ProblemSetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AnswerKeys" EntityType="Self.AnswerKeys" />
+          <EntitySet Name="OrderedProblems" EntityType="Self.OrderedProblems" />
+          <EntitySet Name="Problems" EntityType="Self.Problems" />
+          <EntitySet Name="ProblemSets" EntityType="Self.ProblemSets" />
+          <AssociationSet Name="FK_dbo_AnswerKeys_dbo_Problems_ProblemId" Association="Self.FK_dbo_AnswerKeys_dbo_Problems_ProblemId">
+            <End Role="Problems" EntitySet="Problems" />
+            <End Role="AnswerKeys" EntitySet="AnswerKeys" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_OrderedProblems_dbo_Problems_ProblemId" Association="Self.FK_dbo_OrderedProblems_dbo_Problems_ProblemId">
+            <End Role="Problems" EntitySet="Problems" />
+            <End Role="OrderedProblems" EntitySet="OrderedProblems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_OrderedProblems_dbo_ProblemSets_ProblemSetId" Association="Self.FK_dbo_OrderedProblems_dbo_ProblemSets_ProblemSetId">
+            <End Role="ProblemSets" EntitySet="ProblemSets" />
+            <End Role="OrderedProblems" EntitySet="OrderedProblems" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DataAccessLayerContextModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="AnswerKeys">
+            <EntityTypeMapping TypeName="DataAccessLayer.ContextModel.AnswerKeys">
+              <MappingFragment StoreEntitySet="AnswerKeys">
+                <ScalarProperty Name="AnswerKeyId" ColumnName="AnswerKeyId" />
+                <ScalarProperty Name="Input" ColumnName="Input" />
+                <ScalarProperty Name="Output" ColumnName="Output" />
+                <ScalarProperty Name="FixedRowOrder" ColumnName="FixedRowOrder" />
+                <ScalarProperty Name="ProblemId" ColumnName="ProblemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderedProblems">
+            <EntityTypeMapping TypeName="DataAccessLayer.ContextModel.OrderedProblems">
+              <MappingFragment StoreEntitySet="OrderedProblems">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="ProblemId" ColumnName="ProblemId" />
+                <ScalarProperty Name="ProblemSetId" ColumnName="ProblemSetId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Problems">
+            <EntityTypeMapping TypeName="DataAccessLayer.ContextModel.Problems">
+              <MappingFragment StoreEntitySet="Problems">
+                <ScalarProperty Name="ProblemId" ColumnName="ProblemId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Template" ColumnName="Template" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProblemSets">
+            <EntityTypeMapping TypeName="DataAccessLayer.ContextModel.ProblemSets">
+              <MappingFragment StoreEntitySet="ProblemSets">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

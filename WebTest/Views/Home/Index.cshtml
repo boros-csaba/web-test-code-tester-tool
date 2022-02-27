@@ -1,0 +1,47 @@
+﻿@using DataAccessLayer.Model
+@model WebTest.Models.HomeViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div id="content" class="row panel well">
+    <div class="panel-heading" style="height:100px">
+        <div style="float:left;">
+            <h1>Feladatok sorok:</h1>
+        </div>
+        <div style="float:right;width:300px;margin:25px 0;">
+            @Html.ActionLink("Admin panel", "Index", "Admin", null, new { @class = "btn btn-block btn-primary" })
+        </div>
+    </div>
+
+    <div class="list-group">
+        @foreach (ProblemSet problemSet in Model.ProblemSets)
+        {
+            <a href="@Url.Action("IndexWithProblemSet", "Problem", new { orderedProblemId = problemSet.OrderedProblems.First(p => p.Order == 1).Id })" class="list-group-item">
+                <h4 class="list-group-item-heading">@problemSet.Name</h4>
+                <p class="list-group-item-text">@problemSet.Description</p>
+            </a>
+        }
+    </div>
+
+    <div class="panel-heading" style="height:100px">
+        <div style="float:left;">
+            <h1>Feladatok:</h1>
+        </div>
+    </div>
+
+    <div class="list-group">
+        @foreach (Problem problem in Model.Problems)
+        {
+            bool isSolved = (Session["SolvedProblems"] != null && ((IEnumerable<int>)Session["SolvedProblems"]).Any(p => p == problem.ProblemId));
+            <a href="@Url.Action("Index", "Problem", new { problemId = problem.ProblemId })" class="list-group-item" style="@(isSolved ? "background-color:#dff0d8" : "")">
+                <h4 class="list-group-item-heading">@problem.Title</h4>
+                <p class="list-group-item-text">@problem.Description</p>
+            </a>
+        }
+    </div>
+</div>
+
+        
+

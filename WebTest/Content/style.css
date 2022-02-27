@@ -1,0 +1,35 @@
+﻿body {
+}
+
+#content {
+    width: 1024px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    padding-top: 40px;
+}
+
+.textarea {
+    min-height: 450px;
+    margin-bottom: 10px;
+}
+
+.textareaError {
+    background-color:lightcoral;
+}
+
+.textareaValid {
+    background-color:#6EE17D;
+}
+
+#sortable 
+{ 
+    list-style-type: none;
+    cursor:move;
+}
+
+.deleteli
+{
+    float:right;
+    cursor:pointer;
+}
